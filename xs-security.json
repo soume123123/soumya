@@ -1,0 +1,72 @@
+{
+  "xsappname": "itc-vendor-portal",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    { "name": "$XSAPPNAME.vendor", "description": "Vendor portal access" },
+    { "name": "$XSAPPNAME.admin", "description": "ITC admin access" },
+    { "name": "$XSAPPNAME.approver", "description": "Document approver" },
+    { "name": "$XSAPPNAME.finance", "description": "Finance team" },
+    { "name": "$XSAPPNAME.treasury", "description": "Treasury / payment run" }
+  ],
+  "attributes": [
+    { "name": "vendorId", "description": "Vendor UUID", "valueType": "string" },
+    { "name": "panNumber", "description": "Vendor PAN Number", "valueType": "string" },
+    { "name": "divisionCodes", "description": "Assigned division codes", "valueType": "string" }
+  ],
+  "role-templates": [
+    {
+      "name": "Vendor",
+      "description": "External vendor",
+      "scope-references": ["$XSAPPNAME.vendor"],
+      "attribute-references": ["vendorId", "panNumber"]
+    },
+    {
+      "name": "Admin",
+      "description": "ITC administrator",
+      "scope-references": ["$XSAPPNAME.admin", "$XSAPPNAME.approver", "$XSAPPNAME.finance"]
+    },
+    {
+      "name": "Approver",
+      "description": "Division approver",
+      "scope-references": ["$XSAPPNAME.approver"],
+      "attribute-references": ["divisionCodes"]
+    },
+    {
+      "name": "Finance",
+      "description": "Finance team member",
+      "scope-references": ["$XSAPPNAME.finance", "$XSAPPNAME.approver"]
+    },
+    {
+      "name": "Treasury",
+      "description": "Treasury for payment runs",
+      "scope-references": ["$XSAPPNAME.treasury", "$XSAPPNAME.finance"]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "ITC_Vendor",
+      "description": "External vendor access",
+      "role-template-references": ["$XSAPPNAME.Vendor"]
+    },
+    {
+      "name": "ITC_Admin",
+      "description": "ITC Portal Administrator",
+      "role-template-references": ["$XSAPPNAME.Admin"]
+    },
+    {
+      "name": "ITC_Approver",
+      "description": "Division Approver",
+      "role-template-references": ["$XSAPPNAME.Approver"]
+    },
+    {
+      "name": "ITC_Finance",
+      "description": "Finance Team",
+      "role-template-references": ["$XSAPPNAME.Finance"]
+    },
+    {
+      "name": "ITC_Treasury",
+      "description": "Treasury Team",
+      "role-template-references": ["$XSAPPNAME.Treasury"]
+    }
+  ]
+}

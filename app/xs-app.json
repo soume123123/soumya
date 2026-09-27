@@ -1,0 +1,11 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    { "source": "^/api/vendor/(.*)$", "target": "/api/vendor/$1", "destination": "srv", "authenticationType": "xsuaa" },
+    { "source": "^/api/admin/(.*)$", "target": "/api/admin/$1", "destination": "srv", "authenticationType": "xsuaa" },
+    { "source": "^/api/integration/(.*)$", "target": "/api/integration/$1", "destination": "srv", "authenticationType": "none" },
+    { "source": "^/api/register/(.*)$", "target": "/api/register/$1", "destination": "srv", "authenticationType": "none" },
+    { "source": "^(.*)$", "target": "$1", "localDir": ".", "authenticationType": "none" }
+  ]
+}

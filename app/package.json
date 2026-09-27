@@ -1,0 +1,11 @@
+{
+  "name": "itc-vendor-portal-app",
+  "version": "1.0.0",
+  "description": "ITC Vendor Portal Standalone Approuter",
+  "scripts": {
+    "start": "node node_modules/@sap/approuter/approuter.js"
+  },
+  "dependencies": {
+    "@sap/approuter": "^16.0.0"
+  }
+}

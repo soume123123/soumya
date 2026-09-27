@@ -1,0 +1,18 @@
+code;description;criticality
+DRAFT;Uploaded - not yet extracted;0
+EXTRACTING;Document AI processing;0
+EXTRACTED;Fields extracted - pending review;2
+VALIDATED;Vendor confirmed data;2
+SUBMITTED;Submitted for approval;2
+L1_APPROVED;L1 Approved;3
+L2_APPROVED;L2 Approved;3
+APPROVED;Fully Approved;3
+REJECTED;Rejected by approver;1
+READY_TO_POST;Ready for SAP posting;2
+POSTING;Being posted to SAP;2
+POSTED;Successfully posted;3
+POST_ERROR;SAP posting failed;1
+PAYMENT_PENDING;Awaiting payment;2
+PAYMENT_APPROVED;Payment approved;3
+PAID;Payment completed;3
+

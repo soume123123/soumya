@@ -1,0 +1,2344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="VendorService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <Annotation Term="Core.Links">
+        <Collection>
+          <Record>
+            <PropertyValue Property="rel" String="author"/>
+            <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+          </Record>
+        </Collection>
+      </Annotation>
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="MyProfile" EntityType="VendorService.MyProfile">
+          <NavigationPropertyBinding Path="gstRegistrations" Target="VendorGSTRegistrations"/>
+          <NavigationPropertyBinding Path="country" Target="Countries"/>
+          <NavigationPropertyBinding Path="divisions" Target="MyDivisions"/>
+        </EntitySet>
+        <EntitySet Name="MyDivisions" EntityType="VendorService.MyDivisions">
+          <NavigationPropertyBinding Path="vendor" Target="MyProfile"/>
+          <NavigationPropertyBinding Path="division" Target="Divisions"/>
+        </EntitySet>
+        <EntitySet Name="Divisions" EntityType="VendorService.Divisions">
+          <NavigationPropertyBinding Path="currency" Target="Currencies"/>
+        </EntitySet>
+        <EntitySet Name="DocumentTypes" EntityType="VendorService.DocumentTypes"/>
+        <EntitySet Name="DocumentStatuses" EntityType="VendorService.DocumentStatuses"/>
+        <EntitySet Name="Documents" EntityType="VendorService.Documents">
+          <NavigationPropertyBinding Path="vendor" Target="MyProfile"/>
+          <NavigationPropertyBinding Path="division" Target="Divisions"/>
+          <NavigationPropertyBinding Path="documentType" Target="DocumentTypes"/>
+          <NavigationPropertyBinding Path="currency" Target="Currencies"/>
+          <NavigationPropertyBinding Path="status" Target="DocumentStatuses"/>
+          <NavigationPropertyBinding Path="items" Target="DocumentItems"/>
+          <NavigationPropertyBinding Path="attachments" Target="DocumentAttachments"/>
+          <NavigationPropertyBinding Path="matchResults" Target="ThreeWayMatchResults"/>
+        </EntitySet>
+        <EntitySet Name="DocumentItems" EntityType="VendorService.DocumentItems">
+          <NavigationPropertyBinding Path="document" Target="Documents"/>
+        </EntitySet>
+        <EntitySet Name="DocumentAttachments" EntityType="VendorService.DocumentAttachments">
+          <NavigationPropertyBinding Path="document" Target="Documents"/>
+        </EntitySet>
+        <EntitySet Name="ThreeWayMatchResults" EntityType="VendorService.ThreeWayMatchResults">
+          <NavigationPropertyBinding Path="document" Target="Documents"/>
+        </EntitySet>
+        <EntitySet Name="ShippingNotifications" EntityType="VendorService.ShippingNotifications">
+          <NavigationPropertyBinding Path="vendor" Target="MyProfile"/>
+          <NavigationPropertyBinding Path="division" Target="Divisions"/>
+          <NavigationPropertyBinding Path="items" Target="ASNItems"/>
+        </EntitySet>
+        <EntitySet Name="ASNItems" EntityType="VendorService.ASNItems">
+          <NavigationPropertyBinding Path="asn" Target="ShippingNotifications"/>
+        </EntitySet>
+        <EntitySet Name="VendorQueries" EntityType="VendorService.VendorQueries">
+          <NavigationPropertyBinding Path="vendor" Target="MyProfile"/>
+          <NavigationPropertyBinding Path="division" Target="Divisions"/>
+          <NavigationPropertyBinding Path="messages" Target="QueryMessages"/>
+          <NavigationPropertyBinding Path="attachments" Target="QueryAttachments"/>
+        </EntitySet>
+        <EntitySet Name="QueryMessages" EntityType="VendorService.QueryMessages">
+          <NavigationPropertyBinding Path="query" Target="VendorQueries"/>
+        </EntitySet>
+        <EntitySet Name="QueryAttachments" EntityType="VendorService.QueryAttachments">
+          <NavigationPropertyBinding Path="query" Target="VendorQueries"/>
+        </EntitySet>
+        <EntitySet Name="Announcements" EntityType="VendorService.Announcements">
+          <NavigationPropertyBinding Path="readReceipts" Target="AnnouncementReadReceipts"/>
+        </EntitySet>
+        <EntitySet Name="AnnouncementReadReceipts" EntityType="VendorService.AnnouncementReadReceipts">
+          <NavigationPropertyBinding Path="announcement" Target="Announcements"/>
+          <NavigationPropertyBinding Path="vendor" Target="MyProfile"/>
+        </EntitySet>
+        <EntitySet Name="PaymentItems" EntityType="VendorService.PaymentItems">
+          <NavigationPropertyBinding Path="vendor" Target="MyProfile"/>
+          <NavigationPropertyBinding Path="division" Target="Divisions"/>
+          <NavigationPropertyBinding Path="document" Target="Documents"/>
+          <NavigationPropertyBinding Path="currency" Target="Currencies"/>
+        </EntitySet>
+        <EntitySet Name="GSTInvoiceDetails" EntityType="VendorService.GSTInvoiceDetails">
+          <NavigationPropertyBinding Path="document" Target="Documents"/>
+        </EntitySet>
+        <EntitySet Name="CashDiscounts" EntityType="VendorService.CashDiscounts">
+          <NavigationPropertyBinding Path="document" Target="Documents"/>
+          <NavigationPropertyBinding Path="vendor" Target="MyProfile"/>
+          <NavigationPropertyBinding Path="division" Target="Divisions"/>
+        </EntitySet>
+        <EntitySet Name="AuditLog" EntityType="VendorService.AuditLog">
+          <NavigationPropertyBinding Path="document" Target="Documents"/>
+          <NavigationPropertyBinding Path="asn" Target="ShippingNotifications"/>
+          <NavigationPropertyBinding Path="query" Target="VendorQueries"/>
+        </EntitySet>
+        <EntitySet Name="VendorGSTRegistrations" EntityType="VendorService.VendorGSTRegistrations">
+          <NavigationPropertyBinding Path="vendor" Target="MyProfile"/>
+        </EntitySet>
+        <EntitySet Name="Countries" EntityType="VendorService.Countries">
+          <NavigationPropertyBinding Path="texts" Target="Countries_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="Countries_texts"/>
+        </EntitySet>
+        <EntitySet Name="Currencies" EntityType="VendorService.Currencies">
+          <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
+        </EntitySet>
+        <EntitySet Name="Countries_texts" EntityType="VendorService.Countries_texts"/>
+        <EntitySet Name="Currencies_texts" EntityType="VendorService.Currencies_texts"/>
+        <FunctionImport Name="getExtractionStatus" Function="VendorService.getExtractionStatus"/>
+        <FunctionImport Name="getMyPurchaseOrders" Function="VendorService.getMyPurchaseOrders"/>
+        <FunctionImport Name="getGRNStatus" Function="VendorService.getGRNStatus"/>
+        <FunctionImport Name="getPaymentSummary" Function="VendorService.getPaymentSummary"/>
+      </EntityContainer>
+      <EntityType Name="MyProfile">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="panNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="vendorName" Type="Edm.String" MaxLength="200"/>
+        <Property Name="email" Type="Edm.String" MaxLength="200"/>
+        <Property Name="phone" Type="Edm.String" MaxLength="15"/>
+        <NavigationProperty Name="gstRegistrations" Type="Collection(VendorService.VendorGSTRegistrations)" Partner="vendor">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <Property Name="address" Type="Edm.String" MaxLength="500"/>
+        <Property Name="city" Type="Edm.String" MaxLength="100"/>
+        <Property Name="state" Type="Edm.String" MaxLength="100"/>
+        <Property Name="pincode" Type="Edm.String" MaxLength="6"/>
+        <NavigationProperty Name="country" Type="VendorService.Countries">
+          <ReferentialConstraint Property="country_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="country_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="bankAccountNo" Type="Edm.String" MaxLength="20"/>
+        <Property Name="bankIFSC" Type="Edm.String" MaxLength="11"/>
+        <Property Name="bankName" Type="Edm.String" MaxLength="200"/>
+        <Property Name="status" Type="Edm.String" MaxLength="20" DefaultValue="ACTIVE"/>
+        <NavigationProperty Name="divisions" Type="Collection(VendorService.MyDivisions)" Partner="vendor">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="MyDivisions">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="vendor" Type="VendorService.MyProfile" Partner="divisions">
+          <ReferentialConstraint Property="vendor_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="vendor_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="division" Type="VendorService.Divisions">
+          <ReferentialConstraint Property="division_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="division_ID" Type="Edm.Guid"/>
+        <Property Name="sapVendorCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="reconciliationAcc" Type="Edm.String" MaxLength="10"/>
+        <Property Name="paymentTerms" Type="Edm.String" MaxLength="4"/>
+        <Property Name="active" Type="Edm.Boolean" DefaultValue="true"/>
+      </EntityType>
+      <EntityType Name="Divisions">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="divisionCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="divisionName" Type="Edm.String" MaxLength="200"/>
+        <Property Name="sapSystemType" Type="Edm.String" MaxLength="10"/>
+        <Property Name="sapSystemId" Type="Edm.String" MaxLength="3"/>
+        <Property Name="companyCode" Type="Edm.String" MaxLength="4"/>
+        <Property Name="purchaseOrg" Type="Edm.String" MaxLength="4"/>
+        <Property Name="plantCodes" Type="Edm.String" MaxLength="200"/>
+        <NavigationProperty Name="currency" Type="VendorService.Currencies">
+          <ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="gstinBuyer" Type="Edm.String" MaxLength="15"/>
+        <Property Name="active" Type="Edm.Boolean" DefaultValue="true"/>
+      </EntityType>
+      <EntityType Name="DocumentTypes">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="code" Type="Edm.String" MaxLength="20" Nullable="false"/>
+        <Property Name="description" Type="Edm.String" MaxLength="100"/>
+        <Property Name="sapDocType" Type="Edm.String" MaxLength="2"/>
+      </EntityType>
+      <EntityType Name="DocumentStatuses">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="code" Type="Edm.String" MaxLength="20" Nullable="false"/>
+        <Property Name="description" Type="Edm.String" MaxLength="100"/>
+        <Property Name="criticality" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Documents">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="vendor" Type="VendorService.MyProfile">
+          <ReferentialConstraint Property="vendor_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="vendor_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="division" Type="VendorService.Divisions">
+          <ReferentialConstraint Property="division_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="division_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="documentType" Type="VendorService.DocumentTypes">
+          <ReferentialConstraint Property="documentType_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="documentType_code" Type="Edm.String" MaxLength="20"/>
+        <Property Name="documentNumber" Type="Edm.String" MaxLength="50"/>
+        <Property Name="documentDate" Type="Edm.Date"/>
+        <Property Name="dueDate" Type="Edm.Date"/>
+        <Property Name="poNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="poDate" Type="Edm.Date"/>
+        <Property Name="referenceDocument" Type="Edm.String" MaxLength="50"/>
+        <Property Name="vendorName_ext" Type="Edm.String" MaxLength="200"/>
+        <Property Name="buyerName" Type="Edm.String" MaxLength="200"/>
+        <NavigationProperty Name="currency" Type="VendorService.Currencies">
+          <ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3" DefaultValue="INR"/>
+        <Property Name="baseAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="cgstAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="sgstAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="igstAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="cessAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="tcsAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="totalTaxAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="totalAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="withholdingTax" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="netPayable" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="vendorGSTIN" Type="Edm.String" MaxLength="15"/>
+        <Property Name="buyerGSTIN" Type="Edm.String" MaxLength="15"/>
+        <Property Name="placeOfSupply" Type="Edm.String" MaxLength="100"/>
+        <Property Name="supplyType" Type="Edm.String" MaxLength="20"/>
+        <Property Name="reverseCharge" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="eWayBillNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="eWayBillDate" Type="Edm.Date"/>
+        <Property Name="irnNumber" Type="Edm.String" MaxLength="64"/>
+        <Property Name="irnDate" Type="Edm.Date"/>
+        <Property Name="cashDiscountTerms" Type="Edm.String" MaxLength="4"/>
+        <Property Name="cashDiscountPct1" Type="Edm.Decimal" Precision="5" Scale="2"/>
+        <Property Name="cashDiscountDays1" Type="Edm.Int32"/>
+        <Property Name="cashDiscountPct2" Type="Edm.Decimal" Precision="5" Scale="2"/>
+        <Property Name="cashDiscountDays2" Type="Edm.Int32"/>
+        <Property Name="cashDiscountAmt" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="cashDiscountDate" Type="Edm.Date"/>
+        <NavigationProperty Name="status" Type="VendorService.DocumentStatuses">
+          <ReferentialConstraint Property="status_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="status_code" Type="Edm.String" MaxLength="20"/>
+        <Property Name="uploadedFile" Type="Edm.Stream"/>
+        <Property Name="uploadedMediaType" Type="Edm.String" MaxLength="100"/>
+        <Property Name="fileName" Type="Edm.String" MaxLength="500"/>
+        <Property Name="fileSize" Type="Edm.Int32"/>
+        <Property Name="docAiJobId" Type="Edm.String" MaxLength="100"/>
+        <Property Name="docAiConfidence" Type="Edm.Decimal" Precision="5" Scale="2"/>
+        <Property Name="extractionPayload" Type="Edm.String"/>
+        <Property Name="sapDocNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="sapFiscalYear" Type="Edm.String" MaxLength="4"/>
+        <Property Name="sapPostingDate" Type="Edm.Date"/>
+        <Property Name="sapPostingStatus" Type="Edm.String" MaxLength="20"/>
+        <Property Name="sapPostingMessage" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="workflowInstanceId" Type="Edm.String" MaxLength="100"/>
+        <Property Name="currentApprover" Type="Edm.String" MaxLength="200"/>
+        <Property Name="approvalLevel" Type="Edm.Int32" DefaultValue="0"/>
+        <Property Name="approvalComment" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="poMatchStatus" Type="Edm.String" MaxLength="20"/>
+        <Property Name="grnMatchStatus" Type="Edm.String" MaxLength="20"/>
+        <Property Name="priceMatchStatus" Type="Edm.String" MaxLength="20"/>
+        <NavigationProperty Name="items" Type="Collection(VendorService.DocumentItems)" Partner="document">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="attachments" Type="Collection(VendorService.DocumentAttachments)" Partner="document">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="matchResults" Type="Collection(VendorService.ThreeWayMatchResults)" Partner="document">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="DocumentItems">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="document" Type="VendorService.Documents" Partner="items">
+          <ReferentialConstraint Property="document_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="document_ID" Type="Edm.Guid"/>
+        <Property Name="lineNumber" Type="Edm.Int32"/>
+        <Property Name="materialNumber" Type="Edm.String" MaxLength="40"/>
+        <Property Name="description" Type="Edm.String" MaxLength="500"/>
+        <Property Name="hsnSacCode" Type="Edm.String" MaxLength="8"/>
+        <Property Name="quantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="uom" Type="Edm.String" MaxLength="3"/>
+        <Property Name="unitPrice" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="amount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="taxRate" Type="Edm.Decimal" Precision="5" Scale="2"/>
+        <Property Name="cgst" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="sgst" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="igst" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="taxAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="totalAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="poItemNumber" Type="Edm.String" MaxLength="6"/>
+        <Property Name="grnDocNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="grnItemNumber" Type="Edm.String" MaxLength="4"/>
+        <Property Name="grnQuantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="plantCode" Type="Edm.String" MaxLength="4"/>
+      </EntityType>
+      <EntityType Name="DocumentAttachments">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="document" Type="VendorService.Documents" Partner="attachments">
+          <ReferentialConstraint Property="document_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="document_ID" Type="Edm.Guid"/>
+        <Property Name="file" Type="Edm.Stream"/>
+        <Property Name="mediaType" Type="Edm.String" MaxLength="100"/>
+        <Property Name="fileName" Type="Edm.String" MaxLength="500"/>
+        <Property Name="fileSize" Type="Edm.Int32"/>
+        <Property Name="attachmentType" Type="Edm.String" MaxLength="50"/>
+      </EntityType>
+      <EntityType Name="ThreeWayMatchResults">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="document" Type="VendorService.Documents" Partner="matchResults">
+          <ReferentialConstraint Property="document_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="document_ID" Type="Edm.Guid"/>
+        <Property Name="lineNumber" Type="Edm.Int32"/>
+        <Property Name="poQuantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="grnQuantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="invoiceQuantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="poUnitPrice" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="invoiceUnitPrice" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="quantityVariance" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="priceVariance" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="matchStatus" Type="Edm.String" MaxLength="20"/>
+        <Property Name="tolerancePassed" Type="Edm.Boolean"/>
+      </EntityType>
+      <EntityType Name="ShippingNotifications">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="vendor" Type="VendorService.MyProfile">
+          <ReferentialConstraint Property="vendor_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="vendor_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="division" Type="VendorService.Divisions">
+          <ReferentialConstraint Property="division_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="division_ID" Type="Edm.Guid"/>
+        <Property Name="asnNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="poNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="poDate" Type="Edm.Date"/>
+        <Property Name="shipmentDate" Type="Edm.Date"/>
+        <Property Name="expectedDelivery" Type="Edm.Date"/>
+        <Property Name="carrierName" Type="Edm.String" MaxLength="200"/>
+        <Property Name="trackingNumber" Type="Edm.String" MaxLength="100"/>
+        <Property Name="vehicleNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="lrNumber" Type="Edm.String" MaxLength="50"/>
+        <Property Name="lrDate" Type="Edm.Date"/>
+        <Property Name="dispatchFrom" Type="Edm.String" MaxLength="200"/>
+        <Property Name="deliveryPlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="deliveryAddress" Type="Edm.String" MaxLength="500"/>
+        <Property Name="totalPackages" Type="Edm.Int32"/>
+        <Property Name="totalWeight" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="weightUnit" Type="Edm.String" MaxLength="3" DefaultValue="KG"/>
+        <Property Name="status" Type="Edm.String" MaxLength="20" DefaultValue="CREATED"/>
+        <Property Name="remarks" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="notifiedToITC" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="notificationDate" Type="Edm.DateTimeOffset"/>
+        <NavigationProperty Name="items" Type="Collection(VendorService.ASNItems)" Partner="asn">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="ASNItems">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="asn" Type="VendorService.ShippingNotifications" Partner="items">
+          <ReferentialConstraint Property="asn_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="asn_ID" Type="Edm.Guid"/>
+        <Property Name="lineNumber" Type="Edm.Int32"/>
+        <Property Name="poItemNumber" Type="Edm.String" MaxLength="6"/>
+        <Property Name="materialNumber" Type="Edm.String" MaxLength="40"/>
+        <Property Name="description" Type="Edm.String" MaxLength="500"/>
+        <Property Name="shippedQuantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="uom" Type="Edm.String" MaxLength="3"/>
+        <Property Name="batchNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="manufacturingDate" Type="Edm.Date"/>
+        <Property Name="expiryDate" Type="Edm.Date"/>
+        <Property Name="hsnCode" Type="Edm.String" MaxLength="8"/>
+      </EntityType>
+      <EntityType Name="VendorQueries">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="vendor" Type="VendorService.MyProfile">
+          <ReferentialConstraint Property="vendor_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="vendor_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="division" Type="VendorService.Divisions">
+          <ReferentialConstraint Property="division_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="division_ID" Type="Edm.Guid"/>
+        <Property Name="queryNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="subject" Type="Edm.String" MaxLength="500"/>
+        <Property Name="category" Type="Edm.String" MaxLength="50"/>
+        <Property Name="priority" Type="Edm.String" MaxLength="10"/>
+        <Property Name="status" Type="Edm.String" MaxLength="20" DefaultValue="OPEN"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="referenceDocument" Type="Edm.String" MaxLength="50"/>
+        <Property Name="assignedTo" Type="Edm.String" MaxLength="200"/>
+        <Property Name="resolutionDate" Type="Edm.DateTimeOffset"/>
+        <Property Name="resolutionNotes" Type="Edm.String"/>
+        <NavigationProperty Name="messages" Type="Collection(VendorService.QueryMessages)" Partner="query">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="attachments" Type="Collection(VendorService.QueryAttachments)" Partner="query">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="QueryMessages">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="query" Type="VendorService.VendorQueries" Partner="messages">
+          <ReferentialConstraint Property="query_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="query_ID" Type="Edm.Guid"/>
+        <Property Name="senderType" Type="Edm.String" MaxLength="10"/>
+        <Property Name="senderName" Type="Edm.String" MaxLength="200"/>
+        <Property Name="message" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="QueryAttachments">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="query" Type="VendorService.VendorQueries" Partner="attachments">
+          <ReferentialConstraint Property="query_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="query_ID" Type="Edm.Guid"/>
+        <Property Name="file" Type="Edm.Stream"/>
+        <Property Name="mediaType" Type="Edm.String" MaxLength="100"/>
+        <Property Name="fileName" Type="Edm.String" MaxLength="500"/>
+      </EntityType>
+      <EntityType Name="Announcements">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="title" Type="Edm.String" MaxLength="500"/>
+        <Property Name="content" Type="Edm.String"/>
+        <Property Name="category" Type="Edm.String" MaxLength="50"/>
+        <Property Name="priority" Type="Edm.String" MaxLength="10"/>
+        <Property Name="publishDate" Type="Edm.DateTimeOffset"/>
+        <Property Name="expiryDate" Type="Edm.Date"/>
+        <Property Name="targetDivisions" Type="Edm.String" MaxLength="200"/>
+        <Property Name="isPublished" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="publishedBy" Type="Edm.String" MaxLength="200"/>
+        <NavigationProperty Name="readReceipts" Type="Collection(VendorService.AnnouncementReadReceipts)" Partner="announcement">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="AnnouncementReadReceipts">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="announcement" Type="VendorService.Announcements" Partner="readReceipts">
+          <ReferentialConstraint Property="announcement_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="announcement_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="vendor" Type="VendorService.MyProfile">
+          <ReferentialConstraint Property="vendor_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="vendor_ID" Type="Edm.Guid"/>
+        <Property Name="readAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="PaymentItems">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="vendor" Type="VendorService.MyProfile">
+          <ReferentialConstraint Property="vendor_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="vendor_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="division" Type="VendorService.Divisions">
+          <ReferentialConstraint Property="division_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="division_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="document" Type="VendorService.Documents">
+          <ReferentialConstraint Property="document_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="document_ID" Type="Edm.Guid"/>
+        <Property Name="sapCompanyCode" Type="Edm.String" MaxLength="4"/>
+        <Property Name="sapDocNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="sapFiscalYear" Type="Edm.String" MaxLength="4"/>
+        <Property Name="sapLineItem" Type="Edm.String" MaxLength="3"/>
+        <Property Name="documentType" Type="Edm.String" MaxLength="2"/>
+        <Property Name="postingDate" Type="Edm.Date"/>
+        <Property Name="documentDate" Type="Edm.Date"/>
+        <Property Name="dueDate" Type="Edm.Date"/>
+        <Property Name="baselineDate" Type="Edm.Date"/>
+        <NavigationProperty Name="currency" Type="VendorService.Currencies">
+          <ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3" DefaultValue="INR"/>
+        <Property Name="originalAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="clearedAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="openAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="tdsAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="cashDiscountTaken" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="clearingDoc" Type="Edm.String" MaxLength="10"/>
+        <Property Name="clearingDate" Type="Edm.Date"/>
+        <Property Name="paymentMethod" Type="Edm.String" MaxLength="1"/>
+        <Property Name="paymentRef" Type="Edm.String" MaxLength="30"/>
+        <Property Name="paymentDate" Type="Edm.Date"/>
+        <Property Name="paymentStatus" Type="Edm.String" MaxLength="20"/>
+        <Property Name="daysOverdue" Type="Edm.Int32"/>
+        <Property Name="ageingBucket" Type="Edm.String" MaxLength="20"/>
+        <Property Name="lastSyncedAt" Type="Edm.DateTimeOffset"/>
+      </EntityType>
+      <EntityType Name="GSTInvoiceDetails">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="document" Type="VendorService.Documents">
+          <ReferentialConstraint Property="document_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="document_ID" Type="Edm.Guid"/>
+        <Property Name="gstReturnPeriod" Type="Edm.String" MaxLength="6"/>
+        <Property Name="gstr1Filed" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="gstr2bMatched" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="gstr2bMatchDate" Type="Edm.DateTimeOffset"/>
+        <Property Name="itcEligible" Type="Edm.Boolean" DefaultValue="true"/>
+        <Property Name="itcAmount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="itcClaimedPeriod" Type="Edm.String" MaxLength="6"/>
+        <Property Name="reversal" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="reversalReason" Type="Edm.String" MaxLength="200"/>
+        <Property Name="reconciliationStatus" Type="Edm.String" MaxLength="20"/>
+      </EntityType>
+      <EntityType Name="CashDiscounts">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="document" Type="VendorService.Documents">
+          <ReferentialConstraint Property="document_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="document_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="vendor" Type="VendorService.MyProfile">
+          <ReferentialConstraint Property="vendor_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="vendor_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="division" Type="VendorService.Divisions">
+          <ReferentialConstraint Property="division_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="division_ID" Type="Edm.Guid"/>
+        <Property Name="paymentTerms" Type="Edm.String" MaxLength="4"/>
+        <Property Name="discountPercent1" Type="Edm.Decimal" Precision="5" Scale="2"/>
+        <Property Name="discountDays1" Type="Edm.Int32"/>
+        <Property Name="discountAmount1" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="discountPercent2" Type="Edm.Decimal" Precision="5" Scale="2"/>
+        <Property Name="discountDays2" Type="Edm.Int32"/>
+        <Property Name="discountAmount2" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="netDueDays" Type="Edm.Int32"/>
+        <Property Name="baselineDate" Type="Edm.Date"/>
+        <Property Name="discount1Deadline" Type="Edm.Date"/>
+        <Property Name="discount2Deadline" Type="Edm.Date"/>
+        <Property Name="netDueDate" Type="Edm.Date"/>
+        <Property Name="discountAvailed" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="discountAmountAvailed" Type="Edm.Decimal" Precision="15" Scale="2"/>
+        <Property Name="gstOnDiscount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+      </EntityType>
+      <EntityType Name="AuditLog">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="document" Type="VendorService.Documents">
+          <ReferentialConstraint Property="document_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="document_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="asn" Type="VendorService.ShippingNotifications">
+          <ReferentialConstraint Property="asn_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="asn_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="query" Type="VendorService.VendorQueries">
+          <ReferentialConstraint Property="query_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="query_ID" Type="Edm.Guid"/>
+        <Property Name="entityType" Type="Edm.String" MaxLength="50"/>
+        <Property Name="entityId" Type="Edm.String" MaxLength="36"/>
+        <Property Name="action" Type="Edm.String" MaxLength="50"/>
+        <Property Name="performedBy" Type="Edm.String" MaxLength="200"/>
+        <Property Name="performedByType" Type="Edm.String" MaxLength="10"/>
+        <Property Name="comment" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="oldStatus" Type="Edm.String" MaxLength="20"/>
+        <Property Name="newStatus" Type="Edm.String" MaxLength="20"/>
+        <Property Name="changedFields" Type="Edm.String"/>
+        <Property Name="ipAddress" Type="Edm.String" MaxLength="45"/>
+      </EntityType>
+      <EntityType Name="VendorGSTRegistrations">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="vendor" Type="VendorService.MyProfile" Partner="gstRegistrations">
+          <ReferentialConstraint Property="vendor_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="vendor_ID" Type="Edm.Guid"/>
+        <Property Name="gstin" Type="Edm.String" MaxLength="15"/>
+        <Property Name="gstState" Type="Edm.String" MaxLength="100"/>
+        <Property Name="gstStateCode" Type="Edm.String" MaxLength="2"/>
+        <Property Name="isPrimary" Type="Edm.Boolean" DefaultValue="false"/>
+      </EntityType>
+      <EntityType Name="Countries">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+        <NavigationProperty Name="texts" Type="Collection(VendorService.Countries_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="VendorService.Countries_texts">
+          <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="Currencies">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+        <Property Name="symbol" Type="Edm.String" MaxLength="5"/>
+        <Property Name="minorUnit" Type="Edm.Int16"/>
+        <NavigationProperty Name="texts" Type="Collection(VendorService.Currencies_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="VendorService.Currencies_texts">
+          <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="Countries_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="Currencies_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+      </EntityType>
+      <ComplexType Name="return_VendorService_getExtractionStatus">
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="confidence" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="fields" Type="Collection(VendorService.return_VendorService_getExtractionStatus_fields)" Nullable="true"/>
+      </ComplexType>
+      <ComplexType Name="return_VendorService_getExtractionStatus_fields">
+        <Property Name="name" Type="Edm.String"/>
+        <Property Name="value" Type="Edm.String"/>
+        <Property Name="confidence" Type="Edm.Decimal" Scale="variable"/>
+      </ComplexType>
+      <ComplexType Name="return_VendorService_getMyPurchaseOrders">
+        <Property Name="poNumber" Type="Edm.String"/>
+        <Property Name="poDate" Type="Edm.Date"/>
+        <Property Name="vendor" Type="Edm.String"/>
+        <Property Name="totalValue" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="currency" Type="Edm.String"/>
+        <Property Name="status" Type="Edm.String"/>
+        <Property Name="items" Type="Collection(VendorService.return_VendorService_getMyPurchaseOrders_items)" Nullable="true"/>
+      </ComplexType>
+      <ComplexType Name="return_VendorService_getMyPurchaseOrders_items">
+        <Property Name="itemNumber" Type="Edm.String"/>
+        <Property Name="material" Type="Edm.String"/>
+        <Property Name="description" Type="Edm.String"/>
+        <Property Name="quantity" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="uom" Type="Edm.String"/>
+        <Property Name="unitPrice" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="deliveryDate" Type="Edm.Date"/>
+        <Property Name="grnQuantity" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="grnStatus" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="return_VendorService_getGRNStatus">
+        <Property Name="grnDocNumber" Type="Edm.String"/>
+        <Property Name="grnDate" Type="Edm.Date"/>
+        <Property Name="poItem" Type="Edm.String"/>
+        <Property Name="material" Type="Edm.String"/>
+        <Property Name="quantity" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="uom" Type="Edm.String"/>
+        <Property Name="plant" Type="Edm.String"/>
+        <Property Name="movementType" Type="Edm.String"/>
+      </ComplexType>
+      <ComplexType Name="return_VendorService_getPaymentSummary">
+        <Property Name="totalOutstanding" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="totalOverdue" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="currentDue" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="ageing" Type="Collection(VendorService.return_VendorService_getPaymentSummary_ageing)" Nullable="true"/>
+      </ComplexType>
+      <ComplexType Name="return_VendorService_getPaymentSummary_ageing">
+        <Property Name="bucket" Type="Edm.String"/>
+        <Property Name="amount" Type="Edm.Decimal" Scale="variable"/>
+        <Property Name="count" Type="Edm.Int32"/>
+      </ComplexType>
+      <Action Name="uploadAndExtract" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="VendorService.Documents"/>
+        <Parameter Name="file" Type="Edm.Binary"/>
+        <Parameter Name="fileName" Type="Edm.String"/>
+        <Parameter Name="mediaType" Type="Edm.String"/>
+        <Parameter Name="divisionId" Type="Edm.Guid"/>
+        <Parameter Name="documentType" Type="Edm.String"/>
+        <ReturnType Type="VendorService.Documents"/>
+      </Action>
+      <Action Name="validateAndConfirm" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="VendorService.Documents"/>
+        <ReturnType Type="VendorService.Documents"/>
+      </Action>
+      <Action Name="submitForApproval" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="VendorService.Documents"/>
+        <ReturnType Type="VendorService.Documents"/>
+      </Action>
+      <Action Name="withdraw" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="VendorService.Documents"/>
+        <ReturnType Type="VendorService.Documents"/>
+      </Action>
+      <Action Name="dispatchShipment" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="VendorService.ShippingNotifications"/>
+        <ReturnType Type="VendorService.ShippingNotifications"/>
+      </Action>
+      <Action Name="cancel" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="VendorService.ShippingNotifications"/>
+        <ReturnType Type="VendorService.ShippingNotifications"/>
+      </Action>
+      <Function Name="getExtractionStatus" IsBound="false" IsComposable="false">
+        <Parameter Name="documentId" Type="Edm.Guid"/>
+        <ReturnType Type="VendorService.return_VendorService_getExtractionStatus"/>
+      </Function>
+      <Function Name="getMyPurchaseOrders" IsBound="false" IsComposable="false">
+        <Parameter Name="divisionId" Type="Edm.Guid"/>
+        <ReturnType Type="Collection(VendorService.return_VendorService_getMyPurchaseOrders)" Nullable="true"/>
+      </Function>
+      <Function Name="getGRNStatus" IsBound="false" IsComposable="false">
+        <Parameter Name="divisionId" Type="Edm.Guid"/>
+        <Parameter Name="poNumber" Type="Edm.String"/>
+        <ReturnType Type="Collection(VendorService.return_VendorService_getGRNStatus)" Nullable="true"/>
+      </Function>
+      <Function Name="getPaymentSummary" IsBound="false" IsComposable="false">
+        <Parameter Name="divisionId" Type="Edm.Guid"/>
+        <ReturnType Type="VendorService.return_VendorService_getPaymentSummary"/>
+      </Function>
+      <Annotations Target="VendorService.EntityContainer/MyProfile">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.MyProfile/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.MyProfile/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.MyProfile/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.MyProfile/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.MyProfile/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.MyProfile/panNumber">
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="VendorService.MyProfile/country">
+        <Annotation Term="Common.Label" String="{i18n>Country}"/>
+        <Annotation Term="Core.Description" String="{i18n>CountryCode.Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.MyProfile/country_code">
+        <Annotation Term="Common.Label" String="{i18n>Country}"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="{i18n>Country}"/>
+            <PropertyValue Property="CollectionPath" String="Countries"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="country_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.Description" String="{i18n>CountryCode.Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/MyDivisions">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.MyDivisions/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/Divisions">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.Divisions/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.Divisions/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Divisions/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Divisions/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Divisions/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Divisions/divisionCode">
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="VendorService.Divisions/currency">
+        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Divisions/currency_code">
+        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="{i18n>Currency}"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/DocumentTypes">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/DocumentStatuses">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.Documents">
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>status_code</PropertyPath>
+            <PropertyPath>documentType_code</PropertyPath>
+            <PropertyPath>division_ID</PropertyPath>
+            <PropertyPath>documentDate</PropertyPath>
+            <PropertyPath>poNumber</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="documentNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="documentType_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="documentDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="division/divisionName"/>
+              <PropertyValue Property="Label" String="Division"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="poNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="totalAmount"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="currency_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="status_code"/>
+              <PropertyValue Property="Criticality" Path="status/criticality"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="docAiConfidence"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="createdAt"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                  <PropertyValue Property="Descending" Bool="true"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="TypeName" String="Document"/>
+            <PropertyValue Property="TypeNamePlural" String="Documents"/>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="documentNumber"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="DocumentDetails"/>
+              <PropertyValue Property="Label" String="Document Details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#DocumentDetails"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="Financial"/>
+              <PropertyValue Property="Label" String="Financial"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Financial"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="GSTDetails"/>
+              <PropertyValue Property="Label" String="GST Details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GSTDetails"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="SAPPosting"/>
+              <PropertyValue Property="Label" String="SAP Posting"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#SAPPosting"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="LineItems"/>
+              <PropertyValue Property="Label" String="Line Items"/>
+              <PropertyValue Property="Target" AnnotationPath="items/@UI.LineItem"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="Attachments"/>
+              <PropertyValue Property="Label" String="Attachments"/>
+              <PropertyValue Property="Target" AnnotationPath="attachments/@UI.LineItem"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="AuditHistory"/>
+              <PropertyValue Property="Label" String="Audit History"/>
+              <PropertyValue Property="Target" AnnotationPath="history/@UI.LineItem"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="DocumentDetails">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="documentNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="documentDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="poNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="vendorName_ext"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="buyerName"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="referenceDocument"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Financial">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="baseAmount"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="cgstAmount"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="sgstAmount"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="igstAmount"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="totalTaxAmount"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="totalAmount"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="withholdingTax"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="netPayable"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="currency_code"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="GSTDetails">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="vendorGSTIN"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="buyerGSTIN"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="placeOfSupply"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="supplyType"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="reverseCharge"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="eWayBillNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="irnNumber"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="SAPPosting">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="sapDocNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="sapFiscalYear"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="sapPostingDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="sapPostingStatus"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="sapPostingMessage"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/Documents">
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="createdAt"/>
+                  <PropertyValue Property="Descending" Bool="true"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/documentType_code">
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="DocumentTypes"/>
+            <PropertyValue Property="CollectionPath" String="DocumentTypes"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="documentType_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="description"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="sapDocType"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/currency">
+        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/currency_code">
+        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="{i18n>Currency}"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/status_code">
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="DocumentStatuses"/>
+            <PropertyValue Property="CollectionPath" String="DocumentStatuses"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="status_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="description"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.Documents/uploadedFile">
+        <Annotation Term="Core.MediaType" Path="uploadedMediaType"/>
+      </Annotations>
+      <Annotations Target="VendorService.DocumentItems/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/DocumentAttachments">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.DocumentAttachments/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.DocumentAttachments/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.DocumentAttachments/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.DocumentAttachments/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.DocumentAttachments/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.DocumentAttachments/file">
+        <Annotation Term="Core.MediaType" Path="mediaType"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/ThreeWayMatchResults">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.ThreeWayMatchResults/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.getExtractionStatus(Edm.Guid)/documentId">
+        <Annotation Term="Core.OptionalParameter">
+          <Record Type="Core.OptionalParameterType"/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.getMyPurchaseOrders(Edm.Guid)/divisionId">
+        <Annotation Term="Core.OptionalParameter">
+          <Record Type="Core.OptionalParameterType"/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.getGRNStatus(Edm.Guid,Edm.String)/divisionId">
+        <Annotation Term="Core.OptionalParameter">
+          <Record Type="Core.OptionalParameterType"/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.getGRNStatus(Edm.Guid,Edm.String)/poNumber">
+        <Annotation Term="Core.OptionalParameter">
+          <Record Type="Core.OptionalParameterType"/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.ShippingNotifications">
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>status_code</PropertyPath>
+            <PropertyPath>poNumber</PropertyPath>
+            <PropertyPath>division_ID</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="asnNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="poNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="division/divisionName"/>
+              <PropertyValue Property="Label" String="Division"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="shipmentDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="expectedDelivery"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="carrierName"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="vehicleNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="status_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="createdAt"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="TypeName" String="ASN"/>
+            <PropertyValue Property="TypeNamePlural" String="ASNs"/>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="asnNumber"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="ShipmentDetails"/>
+              <PropertyValue Property="Label" String="Shipment Details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ShipmentDetails"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="Delivery"/>
+              <PropertyValue Property="Label" String="Delivery"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Delivery"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="ASNItems"/>
+              <PropertyValue Property="Label" String="ASN Items"/>
+              <PropertyValue Property="Target" AnnotationPath="items/@UI.LineItem"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="ShipmentDetails">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="asnNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="poNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="shipmentDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="expectedDelivery"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="carrierName"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="trackingNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="vehicleNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="lrNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="lrDate"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="Delivery">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="dispatchFrom"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="deliveryPlant"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="deliveryAddress"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="totalPackages"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="totalWeight"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="weightUnit"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.ShippingNotifications/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.ShippingNotifications/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.ShippingNotifications/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.ShippingNotifications/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.ShippingNotifications/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.ShippingNotifications/poNumber">
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="VendorService.ASNItems/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.VendorQueries">
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>status_code</PropertyPath>
+            <PropertyPath>category_code</PropertyPath>
+            <PropertyPath>priority_code</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="queryNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="subject"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="category_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="priority_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="status_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="assignedTo"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="createdAt"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="TypeName" String="Query"/>
+            <PropertyValue Property="TypeNamePlural" String="Queries"/>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="queryNumber"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="QueryDetails"/>
+              <PropertyValue Property="Label" String="Query Details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#QueryDetails"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="Messages"/>
+              <PropertyValue Property="Label" String="Messages"/>
+              <PropertyValue Property="Target" AnnotationPath="messages/@UI.LineItem"/>
+            </Record>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="Attachments"/>
+              <PropertyValue Property="Label" String="Attachments"/>
+              <PropertyValue Property="Target" AnnotationPath="attachments/@UI.LineItem"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="QueryDetails">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="queryNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="subject"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="category_code"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="priority_code"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="status_code"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="assignedTo"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="createdAt"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.VendorQueries/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.VendorQueries/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.VendorQueries/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.VendorQueries/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.VendorQueries/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryMessages/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryMessages/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryMessages/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryMessages/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryMessages/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/QueryAttachments">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.QueryAttachments/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryAttachments/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryAttachments/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryAttachments/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryAttachments/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.QueryAttachments/file">
+        <Annotation Term="Core.MediaType" Path="mediaType"/>
+      </Annotations>
+      <Annotations Target="VendorService.Announcements">
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="title"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="category_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="priority_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="publishDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="expiryDate"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/Announcements">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.Announcements/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.Announcements/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Announcements/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Announcements/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Announcements/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/AnnouncementReadReceipts">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.AnnouncementReadReceipts/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.PaymentItems">
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>paymentStatus_code</PropertyPath>
+            <PropertyPath>division_ID</PropertyPath>
+            <PropertyPath>ageingBucket</PropertyPath>
+            <PropertyPath>dueDate</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="sapDocNumber"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="documentType_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="documentDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="dueDate"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="currency_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="originalAmount"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="openAmount"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="paymentStatus_code"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="paymentRef"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="ageingBucket"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="daysOverdue"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="dueDate"/>
+                  <PropertyValue Property="Descending" Bool="false"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.HeaderInfo">
+          <Record Type="UI.HeaderInfoType">
+            <PropertyValue Property="TypeName" String="Payment"/>
+            <PropertyValue Property="TypeNamePlural" String="Payments"/>
+            <PropertyValue Property="Title">
+              <Record Type="UI.DataField">
+                <PropertyValue Property="Value" Path="sapDocNumber"/>
+              </Record>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="PaymentDetails"/>
+              <PropertyValue Property="Label" String="Payment Details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#PaymentDetails"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="PaymentDetails">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="sapDocNumber"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="documentType_code"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="documentDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="dueDate"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="currency_code"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="originalAmount"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="openAmount"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="paymentStatus_code"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="paymentRef"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="ageingBucket"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="daysOverdue"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="division_ID"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/PaymentItems">
+        <Annotation Term="UI.PresentationVariant">
+          <Record Type="UI.PresentationVariantType">
+            <PropertyValue Property="SortOrder">
+              <Collection>
+                <Record Type="Common.SortOrderType">
+                  <PropertyValue Property="Property" PropertyPath="dueDate"/>
+                  <PropertyValue Property="Descending" Bool="false"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.PaymentItems/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.PaymentItems/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.PaymentItems/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.PaymentItems/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.PaymentItems/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.PaymentItems/currency">
+        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.PaymentItems/currency_code">
+        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="{i18n>Currency}"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.getPaymentSummary(Edm.Guid)/divisionId">
+        <Annotation Term="Core.OptionalParameter">
+          <Record Type="Core.OptionalParameterType"/>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/GSTInvoiceDetails">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.GSTInvoiceDetails/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/CashDiscounts">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.CashDiscounts/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.CashDiscounts/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.CashDiscounts/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.CashDiscounts/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.CashDiscounts/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.EntityContainer/AuditLog">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.AuditLog/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.AuditLog/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.AuditLog/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.AuditLog/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="VendorService.AuditLog/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="VendorService.VendorGSTRegistrations/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="VendorService.VendorGSTRegistrations/gstin">
+        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+      </Annotations>
+      <Annotations Target="VendorService.Countries">
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.Countries/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Countries/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Countries/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CountryCode}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies">
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies/symbol">
+        <Annotation Term="Common.Label" String="{i18n>CurrencySymbol}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies/minorUnit">
+        <Annotation Term="Common.Label" String="{i18n>CurrencyMinorUnit}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Countries_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Countries_texts/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Countries_texts/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Countries_texts/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CountryCode}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies_texts/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies_texts/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="VendorService.Currencies_texts/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

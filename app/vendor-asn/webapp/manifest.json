@@ -1,0 +1,82 @@
+{
+  "_version": "1.49.0",
+  "sap.app": {
+    "id": "itc.vendor.asn",
+    "type": "application",
+    "title": "Vendor ASN",
+    "description": "Vendor ASN",
+    "dataSources": {
+      "mainService": {
+        "uri": "/api/vendor/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.fe.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "routing": {
+      "routes": [
+        {
+          "name": "ShippingNotificationsList",
+          "target": "ShippingNotificationsList",
+          "pattern": ""
+        },
+        {
+          "name": "ShippingNotificationsObjectPage",
+          "target": "ShippingNotificationsObjectPage",
+          "pattern": "ShippingNotifications({key})"
+        }
+      ],
+      "targets": {
+        "ShippingNotificationsList": {
+          "type": "Component",
+          "id": "ShippingNotificationsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "ShippingNotifications",
+              "navigation": {
+                "ShippingNotifications": {
+                  "detail": {
+                    "route": "ShippingNotificationsObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ShippingNotificationsObjectPage": {
+          "type": "Component",
+          "id": "ShippingNotificationsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "ShippingNotifications"
+            }
+          }
+        }
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    }
+  }
+}

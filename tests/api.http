@@ -1,0 +1,95 @@
+### ITC Vendor Portal API Tests
+### Make sure the CAP server is running (npx cds watch)
+
+@baseUrl = http://localhost:4004
+@vendor1Auth = Authorization: Basic vendor1:vendor1
+@admin1Auth = Authorization: Basic admin1:admin1
+
+### =========================================
+### VENDOR API TESTS
+### =========================================
+
+### 1. Get Vendor Profile
+GET {{baseUrl}}/api/vendor/MyProfile
+{{vendor1Auth}}
+
+### 2. Get Vendor Divisions
+GET {{baseUrl}}/api/vendor/MyDivisions
+{{vendor1Auth}}
+
+### 3. Get ASN List
+GET {{baseUrl}}/api/vendor/ShippingNotifications
+{{vendor1Auth}}
+
+### 4. Create an ASN (Advanced Shipping Notification)
+POST {{baseUrl}}/api/vendor/ShippingNotifications
+{{vendor1Auth}}
+Content-Type: application/json
+
+{
+  "poNumber": "4500001234",
+  "shipmentDate": "2023-10-15",
+  "expectedDelivery": "2023-10-20",
+  "carrierName": "FedEx",
+  "vehicleNumber": "MH01AB1234",
+  "division_ID": "a1b2c3d4-0001-0001-0001-000000000001",
+  "items": [
+    {
+      "lineNumber": 10,
+      "poItemNumber": "00010",
+      "materialNumber": "MAT-123",
+      "shippedQuantity": 100,
+      "uom": "EA"
+    }
+  ]
+}
+
+### 5. Get Payment Summary
+GET {{baseUrl}}/api/vendor/getPaymentSummary(divisionId=a1b2c3d4-0001-0001-0001-000000000001)
+{{vendor1Auth}}
+
+### =========================================
+### ADMIN API TESTS
+### =========================================
+
+### 1. List All Vendors
+GET {{baseUrl}}/api/admin/Vendors
+{{admin1Auth}}
+
+### 2. List Document Approvals
+GET {{baseUrl}}/api/admin/Documents
+{{admin1Auth}}
+
+### 3. Test SAP Connectivity
+POST {{baseUrl}}/api/admin/testConnection
+{{admin1Auth}}
+Content-Type: application/json
+
+{}
+
+### =========================================
+### INTEGRATION API TESTS
+### =========================================
+
+### 1. Test Workflow Callback (Simulate BPA Approval)
+POST {{baseUrl}}/api/integration/workflowCallback
+Content-Type: application/json
+
+{
+  "workflowInstanceId": "wf-instance-123",
+  "decision": "approve",
+  "comment": "Approved by Line Manager",
+  "approverEmail": "approver@itc.in"
+}
+
+### 2. Register new Vendor (Public API)
+POST {{baseUrl}}/api/register/VendorRegistrations
+Content-Type: application/json
+
+{
+  "panNumber": "TEST1234T",
+  "vendorName": "New Test Vendor",
+  "email": "test@test.com",
+  "phone": "9999999999",
+  "requestedDivisions": "FMCG, HOTELS"
+}

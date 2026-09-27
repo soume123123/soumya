@@ -1,0 +1,82 @@
+{
+  "_version": "1.49.0",
+  "sap.app": {
+    "id": "itc.vendor.payments",
+    "type": "application",
+    "title": "Vendor Payments",
+    "description": "Vendor Payments",
+    "dataSources": {
+      "mainService": {
+        "uri": "/api/vendor/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.fe.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "routing": {
+      "routes": [
+        {
+          "name": "PaymentItemsList",
+          "target": "PaymentItemsList",
+          "pattern": ""
+        },
+        {
+          "name": "PaymentItemsObjectPage",
+          "target": "PaymentItemsObjectPage",
+          "pattern": "PaymentItems({key})"
+        }
+      ],
+      "targets": {
+        "PaymentItemsList": {
+          "type": "Component",
+          "id": "PaymentItemsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "PaymentItems",
+              "navigation": {
+                "PaymentItems": {
+                  "detail": {
+                    "route": "PaymentItemsObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "PaymentItemsObjectPage": {
+          "type": "Component",
+          "id": "PaymentItemsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "PaymentItems"
+            }
+          }
+        }
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+ID;panNumber;vendorName;email;phone;status
+v001;ABCDE1234F;Acme Suppliers Pvt Ltd;vendor1@acme.com;9876543210;ACTIVE
+v002;FGHIJ5678K;Beta Trading Co;vendor2@beta.com;9876543211;ACTIVE

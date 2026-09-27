@@ -1,0 +1,19 @@
+{
+  "[development]": {
+    "auth": {
+      "kind": "mocked"
+    }
+  },
+  "i18n": {
+    "default_language": "en"
+  },
+  "odata": {
+    "version": "v4"
+  },
+  "log": {
+    "levels": {
+      "cds": "info",
+      "db": "info"
+    }
+  }
+}

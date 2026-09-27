@@ -1,0 +1,109 @@
+{
+  "name": "itc-vendor-portal",
+  "version": "1.0.0",
+  "description": "ITC Vendor Collaboration Portal - SAP BTP CAP Application",
+  "repository": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^8",
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^4",
+    "express": "^4",
+    "axios": "^1",
+    "passport": "^0.7",
+    "uuid": "^9"
+  },
+  "devDependencies": {
+    "@sap/cds-dk": "^8",
+    "@sap/ux-specification": "latest",
+    "@cap-js/sqlite": "^1",
+    "chai": "^4",
+    "chai-as-promised": "^7",
+    "mocha": "^10"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "mock:dox": "node tests/mock-dox-server.js",
+    "simulate:workflow": "node tests/simulate-workflow.js",
+    "watch": "cds watch",
+    "test": "mocha tests/ --recursive --timeout 10000",
+    "build": "cds build --production",
+    "deploy": "cds deploy --to hana"
+  },
+  "cds": {
+    "server": { "index": true },
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "[development]": {
+          "kind": "sqlite",
+          "credentials": {
+            "database": "db.sqlite"
+          }
+        }
+      },
+      "auth": {
+        "kind": "xsuaa",
+        "[development]": {
+          "kind": "mocked",
+          "users": {
+            "vendor1": {
+              "password": "vendor1",
+              "roles": ["vendor"],
+              "attr": {
+                "vendorId": "v001",
+                "panNumber": "ABCDE1234F"
+              }
+            },
+            "vendor2": {
+              "password": "vendor2",
+              "roles": ["vendor"],
+              "attr": {
+                "vendorId": "v002",
+                "panNumber": "FGHIJ5678K"
+              }
+            },
+            "admin1": {
+              "password": "admin1",
+              "roles": ["admin", "approver", "finance", "treasury", "vendor"],
+              "attr": {
+                "vendorId": "v001",
+                "panNumber": "ABCDE1234F"
+              }
+            },
+            "Admin1": {
+              "password": "admin1",
+              "roles": ["admin", "approver", "finance", "treasury"]
+            },
+            "approver1": {
+              "password": "approver1",
+              "roles": ["approver"]
+            },
+            "finance1": {
+              "password": "finance1",
+              "roles": ["finance", "approver"]
+            }
+          }
+        }
+      },
+      "DOX_API": { "kind": "rest", "credentials": { "url": "http://localhost:8081" } }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "build": {
+      "target": "gen",
+      "tasks": [
+        { "for": "hana", "src": "db", "options": { "model": ["db", "srv"] } },
+        { "for": "node-cf", "src": "srv", "options": { "model": ["db", "srv"] } }
+      ]
+    }
+  }
+}
+
+
+
+
+
+

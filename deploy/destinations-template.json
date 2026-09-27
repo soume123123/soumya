@@ -1,0 +1,75 @@
+{
+  "Description": "ITC Vendor Portal - BTP Destination Configurations",
+  "Destinations": [
+    {
+      "Name": "itc-dox-api",
+      "Description": "SAP Document Information Extraction Service (DOX)",
+      "Type": "HTTP",
+      "URL": "https://aiservices-dox.cfapps.<REGION>.hana.ondemand.com",
+      "Authentication": "OAuth2ClientCredentials",
+      "tokenServiceURL": "https://<SUBACCOUNT>.authentication.<REGION>.hana.ondemand.com/oauth/token",
+      "clientId": "<DOX_SERVICE_INSTANCE_CLIENT_ID>",
+      "clientSecret": "<DOX_SERVICE_INSTANCE_CLIENT_SECRET>",
+      "HTML5.DynamicDestination": "true"
+    },
+    {
+      "Name": "SPA_Workflow",
+      "Description": "SAP Build Process Automation Workflow REST API",
+      "Type": "HTTP",
+      "URL": "https://spa-api-gateway-bpi-us-prod.<REGION>.process-automation.ondemand.com",
+      "Authentication": "OAuth2ClientCredentials",
+      "tokenServiceURL": "https://<SUBACCOUNT>.authentication.<REGION>.hana.ondemand.com/oauth/token",
+      "clientId": "<SPA_SERVICE_INSTANCE_CLIENT_ID>",
+      "clientSecret": "<SPA_SERVICE_INSTANCE_CLIENT_SECRET>",
+      "HTML5.DynamicDestination": "true"
+    },
+    {
+      "Name": "S4F",
+      "Description": "ITC FMCG Division - SAP S/4HANA System",
+      "Type": "HTTP",
+      "URL": "http://s4f-virtual.corp.itc.in:44300",
+      "ProxyType": "OnPremise",
+      "Authentication": "BasicAuthentication",
+      "User": "<TECHNICAL_RFC_USER>",
+      "Password": "<TECHNICAL_RFC_PASSWORD>",
+      "CloudConnectorLocationId": "ITC_PUN_CC",
+      "sap-client": "100"
+    },
+    {
+      "Name": "ECR",
+      "Description": "ITC Paperboards Division - SAP ECC 6.0 System",
+      "Type": "HTTP",
+      "URL": "http://ecr-virtual.corp.itc.in:8000",
+      "ProxyType": "OnPremise",
+      "Authentication": "BasicAuthentication",
+      "User": "<TECHNICAL_RFC_USER>",
+      "Password": "<TECHNICAL_RFC_PASSWORD>",
+      "CloudConnectorLocationId": "ITC_HYD_CC",
+      "sap-client": "300"
+    },
+    {
+      "Name": "S4H",
+      "Description": "ITC Hotels Division - SAP S/4HANA System",
+      "Type": "HTTP",
+      "URL": "http://s4h-virtual.corp.itc.in:44300",
+      "ProxyType": "OnPremise",
+      "Authentication": "BasicAuthentication",
+      "User": "<TECHNICAL_RFC_USER>",
+      "Password": "<TECHNICAL_RFC_PASSWORD>",
+      "CloudConnectorLocationId": "ITC_BLR_CC",
+      "sap-client": "200"
+    },
+    {
+      "Name": "ECA",
+      "Description": "ITC Agri Business Division - SAP ECC 6.0 System",
+      "Type": "HTTP",
+      "URL": "http://eca-virtual.corp.itc.in:8000",
+      "ProxyType": "OnPremise",
+      "Authentication": "BasicAuthentication",
+      "User": "<TECHNICAL_RFC_USER>",
+      "Password": "<TECHNICAL_RFC_PASSWORD>",
+      "CloudConnectorLocationId": "ITC_KOL_CC",
+      "sap-client": "400"
+    }
+  ]
+}

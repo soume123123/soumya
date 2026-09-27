@@ -1,0 +1,5 @@
+code;description;sapDocType
+INVOICE;Supplier Invoice;RE
+CREDIT_NOTE;Credit Note;KG
+DEBIT_NOTE;Debit Note;KR
+

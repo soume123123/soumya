@@ -1,0 +1,82 @@
+{
+  "_version": "1.49.0",
+  "sap.app": {
+    "id": "itc.admin.approvals",
+    "type": "application",
+    "title": "Admin Approvals",
+    "description": "Admin Approvals",
+    "dataSources": {
+      "mainService": {
+        "uri": "/api/admin/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.fe.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "routing": {
+      "routes": [
+        {
+          "name": "DocumentsList",
+          "target": "DocumentsList",
+          "pattern": ""
+        },
+        {
+          "name": "DocumentsObjectPage",
+          "target": "DocumentsObjectPage",
+          "pattern": "Documents({key})"
+        }
+      ],
+      "targets": {
+        "DocumentsList": {
+          "type": "Component",
+          "id": "DocumentsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "Documents",
+              "navigation": {
+                "Documents": {
+                  "detail": {
+                    "route": "DocumentsObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DocumentsObjectPage": {
+          "type": "Component",
+          "id": "DocumentsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Documents"
+            }
+          }
+        }
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    }
+  }
+}

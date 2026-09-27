@@ -1,0 +1,55 @@
+# Cloud Foundry Manifest for ITC Vendor Portal
+# Used for direct deployment via 'cf push' or CI/CD pipelines
+---
+applications:
+
+  # 1. HANA Database Deployer (Runs once on deploy to update HANA HDI tables & views)
+  - name: itc-vendor-portal-db-deployer
+    path: gen/db
+    memory: 256M
+    disk_quota: 512M
+    buildpacks:
+      - nodejs_buildpack
+    services:
+      - itc-vendor-portal-db
+    command: npm start
+    no-route: true
+    health-check-type: process
+
+  # 2. CAP Node.js Backend Service
+  - name: itc-vendor-portal-srv
+    path: gen/srv
+    memory: 512M
+    disk_quota: 1024M
+    buildpacks:
+      - nodejs_buildpack
+    random-route: true
+    services:
+      - itc-vendor-portal-auth
+      - itc-vendor-portal-db
+      - itc-vendor-portal-dest
+      - itc-vendor-portal-conn
+    env:
+      NODE_ENV: production
+      CDS_ENV: production
+
+  # 3. Standalone Approuter (Web UI & Security Gateway)
+  - name: itc-vendor-portal-app
+    path: app
+    memory: 256M
+    disk_quota: 512M
+    buildpacks:
+      - nodejs_buildpack
+    random-route: true
+    services:
+      - itc-vendor-portal-auth
+    env:
+      TENANT_HOST_PATTERN: '^(.*).cfapps.(.*).hana.ondemand.com'
+      destinations: >
+        [
+          {
+            "name": "srv",
+            "url": "https://itc-vendor-portal-srv.<LANDSCAPE_DOMAIN>",
+            "forwardAuthToken": true
+          }
+        ]

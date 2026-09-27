@@ -1,0 +1,82 @@
+{
+  "_version": "1.49.0",
+  "sap.app": {
+    "id": "itc.vendor.queries",
+    "type": "application",
+    "title": "Vendor Queries",
+    "description": "Vendor Queries",
+    "dataSources": {
+      "mainService": {
+        "uri": "/api/vendor/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.fe.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "routing": {
+      "routes": [
+        {
+          "name": "VendorQueriesList",
+          "target": "VendorQueriesList",
+          "pattern": ""
+        },
+        {
+          "name": "VendorQueriesObjectPage",
+          "target": "VendorQueriesObjectPage",
+          "pattern": "VendorQueries({key})"
+        }
+      ],
+      "targets": {
+        "VendorQueriesList": {
+          "type": "Component",
+          "id": "VendorQueriesList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "VendorQueries",
+              "navigation": {
+                "VendorQueries": {
+                  "detail": {
+                    "route": "VendorQueriesObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "VendorQueriesObjectPage": {
+          "type": "Component",
+          "id": "VendorQueriesObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "VendorQueries"
+            }
+          }
+        }
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    }
+  }
+}
