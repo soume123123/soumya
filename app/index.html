@@ -55,6 +55,7 @@
         .account button[hidden], .dialog[hidden], .dialog-backdrop[hidden] { display: none; }
         .dialog-backdrop { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(23, 35, 30, .28); }
         .dialog { width: min(420px, 100%); padding: 26px; border: 1px solid #dce3dc; border-radius: 4px; background: #fff; box-shadow: 0 16px 40px rgba(23, 35, 30, .18); }
+        .profile-dialog { width: min(560px, 100%); max-height: calc(100vh - 40px); overflow-y: auto; }
         .dialog h2 { margin: 0 0 18px; }
         .dialog form { display: grid; gap: 12px; }
         .dialog label { display: grid; gap: 5px; color: #64736b; font-size: 13px; }
@@ -188,7 +189,7 @@
         <section aria-labelledby="vendor-heading">
             <div class="section-heading">
                 <h2 id="vendor-heading">Vendor workspace</h2>
-                <span class="section-count">04 applications</span>
+                <span class="section-count">05 applications</span>
             </div>
             <div class="app-grid">
                 <a class="app-link" href="/vendor-invoices/webapp/index.html">
@@ -206,6 +207,10 @@
                 <a class="app-link" href="/vendor-queries/webapp/index.html">
                     <span class="app-icon" aria-hidden="true">QU</span>
                     <span class="app-copy"><span class="app-title">Vendor Queries</span><span class="app-description">View queries and announcements</span></span>
+                </a>
+                <a class="app-link" href="/collaboration/">
+                    <span class="app-icon" aria-hidden="true">CO</span>
+                    <span class="app-copy"><span class="app-title">Collaboration</span><span class="app-description">Chat with vendors and ITC employees</span></span>
                 </a>
             </div>
         </section>
@@ -240,10 +245,25 @@
         </section>
     </div>
     <div id="profile-dialog" class="dialog-backdrop" hidden>
-        <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+        <section class="dialog profile-dialog" role="dialog" aria-modal="true" aria-labelledby="profile-title">
             <h2 id="profile-title">Profile</h2>
-            <p id="profile-details"></p>
-            <div class="dialog-actions"><button id="close-profile" type="button">Close</button></div>
+            <p id="profile-details" class="account-name"></p>
+            <form id="profile-form">
+                <label>Email address <input id="profile-email" name="email" type="email" autocomplete="email"></label>
+                <label>Mobile number <input id="profile-phone" name="phone" type="tel" autocomplete="tel"></label>
+                <label>Office address <input id="profile-address" name="address" autocomplete="street-address"></label>
+                <label>Contact person <input id="profile-contact" name="contactPerson" autocomplete="name"></label>
+                <div id="profile-error" class="dialog-error" role="alert"></div>
+                <div class="dialog-actions"><button type="submit">Save profile</button></div>
+            </form>
+            <form id="password-form">
+                <h3>Set / reset password</h3>
+                <label>Current password <input name="currentPassword" type="password" autocomplete="current-password" required></label>
+                <label>New password <input name="newPassword" type="password" autocomplete="new-password" minlength="6" required></label>
+                <label>Confirm new password <input name="confirmPassword" type="password" autocomplete="new-password" minlength="6" required></label>
+                <div id="password-error" class="dialog-error" role="alert"></div>
+                <div class="dialog-actions"><button type="submit">Update password</button><button id="close-profile" type="button">Close</button></div>
+            </form>
         </section>
     </div>
     <script>
@@ -254,6 +274,8 @@
         const loginDialog = document.getElementById('login-dialog');
         const profileDialog = document.getElementById('profile-dialog');
         const loginError = document.getElementById('login-error');
+        const profileError = document.getElementById('profile-error');
+        const passwordError = document.getElementById('password-error');
         let session = null;
 
         function updateAccount() {
@@ -274,8 +296,16 @@
         loginButton.onclick = () => { loginError.textContent = ''; loginDialog.hidden = false; loginDialog.querySelector('input').focus(); };
         document.getElementById('cancel-login').onclick = () => { loginDialog.hidden = true; };
         document.getElementById('close-profile').onclick = () => { profileDialog.hidden = true; };
-        profileButton.onclick = () => {
-            document.getElementById('profile-details').textContent = `User: ${session.username} | Roles: ${session.roles.join(', ')}${session.vendorId ? ` | Vendor ID: ${session.vendorId}` : ''}`;
+        profileButton.onclick = async () => {
+            profileError.textContent = '';
+            const response = await fetch('/auth/profile');
+            if (!response.ok) { profileError.textContent = 'Unable to load profile.'; return; }
+            const profile = await response.json();
+            document.getElementById('profile-details').textContent = `User: ${profile.username} | Roles: ${profile.roles.join(', ')}${profile.vendorId ? ` | Vendor ID: ${profile.vendorId}` : ''}`;
+            document.getElementById('profile-email').value = profile.email || '';
+            document.getElementById('profile-phone').value = profile.phone || '';
+            document.getElementById('profile-address').value = profile.address || '';
+            document.getElementById('profile-contact').value = profile.contactPerson || '';
             profileDialog.hidden = false;
         };
         logoutButton.onclick = async () => { await fetch('/auth/logout', { method: 'POST' }); session = null; updateAccount(); };
@@ -285,6 +315,19 @@
             const response = await fetch('/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(form)) });
             if (!response.ok) { loginError.textContent = (await response.json()).message; return; }
             session = await response.json(); loginDialog.hidden = true; event.target.reset(); updateAccount();
+        };
+        document.getElementById('profile-form').onsubmit = async event => {
+            event.preventDefault();
+            profileError.textContent = '';
+            const response = await fetch('/auth/profile', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(event.target))) });
+            profileError.textContent = response.ok ? 'Profile saved.' : (await response.json()).message;
+        };
+        document.getElementById('password-form').onsubmit = async event => {
+            event.preventDefault();
+            passwordError.textContent = '';
+            const response = await fetch('/auth/password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(new FormData(event.target))) });
+            passwordError.textContent = response.ok ? 'Password updated.' : (await response.json()).message;
+            if (response.ok) event.target.reset();
         };
         loadSession();
     </script>

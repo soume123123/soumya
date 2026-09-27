@@ -10,6 +10,7 @@ entity Vendors : cuid, managed {
   vendorName        : String(200);
   email             : String(200);
   phone             : String(15);
+  contactPerson     : String(200);
   gstRegistrations  : Composition of many VendorGSTRegistrations
                         on gstRegistrations.vendor = $self;
   address           : String(500);
