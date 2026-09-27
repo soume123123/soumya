@@ -1,0 +1,3 @@
+ID;documentNumber;documentType_code;division_ID;vendor_ID;buyerName;documentDate;currency_code;baseAmount;totalTaxAmount;totalAmount;status_code;docAiConfidence;createdAt;createdBy
+d3b07384-d113-4122-89a1-8d070b4395a1;INV-2023-001;INV;div-1001;v001;John Doe;2023-10-01;INR;1000.00;180.00;1180.00;SUBMITTED;0.95;2023-10-01T10:00:00Z;vendor1
+d3b07384-d113-4122-89a1-8d070b4395a2;INV-2023-002;INV;div-1001;v001;Jane Smith;2023-10-05;INR;2500.00;450.00;2950.00;APPROVED;0.98;2023-10-05T14:30:00Z;vendor1

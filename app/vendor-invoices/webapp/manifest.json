@@ -45,7 +45,7 @@
           "options": {
             "settings": {
               "entitySet": "Documents",
-              "variantManagement": "Page",
+              
               "navigation": {
                 "Documents": {
                   "detail": {

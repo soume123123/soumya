@@ -77,10 +77,7 @@ annotate VendorService.Documents with @(
     }
 );
 
-annotate VendorService.Documents with {
-    status @ValueList: { entity: 'DocumentStatuses' };
-    documentType @ValueList: { entity: 'DocumentTypes' };
-}
+
 
 annotate VendorService.DocumentItems with @(
     UI: {
