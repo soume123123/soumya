@@ -33,7 +33,7 @@
         {
           "name": "ShippingNotificationsObjectPage",
           "target": "ShippingNotificationsObjectPage",
-          "pattern": "ShippingNotifications({key})"
+          "pattern": "ShippingNotifications({key}):?query:"
         }
       ],
       "targets": {

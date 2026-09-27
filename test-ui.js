@@ -11,6 +11,18 @@ const puppeteer = require('puppeteer');
 
     page.on('pageerror', error => {
         console.log(`PAGE ERROR:`, error.message);
+        console.log(`PAGE ERROR STACK:`, error.stack);
+    });
+
+    await page.evaluateOnNewDocument(() => {
+        const originalParse = JSON.parse;
+        JSON.parse = function(text, reviver) {
+            if (typeof text === 'string' && text.includes('[\{"key":"s')) {
+                console.log('HOOKED JSON.parse WITH BAD TEXT:', text);
+                console.log('HOOKED TRACE:', new Error().stack);
+            }
+            return originalParse(text, reviver);
+        };
     });
 
     await page.setExtraHTTPHeaders({

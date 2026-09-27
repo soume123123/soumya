@@ -2,7 +2,7 @@ using VendorService from '../../srv/vendor-service';
 
 annotate VendorService.ShippingNotifications with @(
     UI: {
-        SelectionFields: [ status_code, poNumber, division_ID ],
+        SelectionFields: [ status, poNumber, division_ID ],
         LineItem: [
             { Value: asnNumber },
             { Value: poNumber },
@@ -11,7 +11,7 @@ annotate VendorService.ShippingNotifications with @(
             { Value: expectedDelivery },
             { Value: carrierName },
             { Value: vehicleNumber },
-            { Value: status_code },
+            { Value: status },
             { Value: createdAt }
         ],
         HeaderInfo: {

@@ -34,7 +34,7 @@
         {
           "name": "DocumentsObjectPage",
           "target": "DocumentsObjectPage",
-          "pattern": "Documents({key})"
+          "pattern": "Documents({key}):?query:"
         }
       ],
       "targets": {

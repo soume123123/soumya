@@ -2,13 +2,13 @@ using VendorService from '../../srv/vendor-service';
 
 annotate VendorService.VendorQueries with @(
     UI: {
-        SelectionFields: [ status_code, category_code, priority_code ],
+        SelectionFields: [ status, category, priority ],
         LineItem: [
             { Value: queryNumber },
             { Value: subject },
-            { Value: category_code },
-            { Value: priority_code },
-            { Value: status_code },
+            { Value: category },
+            { Value: priority },
+            { Value: status },
             { Value: assignedTo },
             { Value: createdAt }
         ],
@@ -26,9 +26,9 @@ annotate VendorService.VendorQueries with @(
             Data: [
                 { Value: queryNumber },
                 { Value: subject },
-                { Value: category_code },
-                { Value: priority_code },
-                { Value: status_code },
+                { Value: category },
+                { Value: priority },
+                { Value: status },
                 { Value: assignedTo },
                 { Value: createdAt }
             ]
@@ -40,8 +40,8 @@ annotate VendorService.Announcements with @(
     UI: {
         LineItem: [
             { Value: title },
-            { Value: category_code },
-            { Value: priority_code },
+            { Value: category },
+            { Value: priority },
             { Value: publishDate },
             { Value: expiryDate }
         ]
@@ -51,7 +51,7 @@ annotate VendorService.Announcements with @(
 annotate VendorService.QueryMessages with @(
     UI: {
         LineItem: [
-            { Value: messageText },
+            { Value: message },
             { Value: isFromVendor },
             { Value: createdAt }
         ]
@@ -62,7 +62,7 @@ annotate VendorService.QueryAttachments with @(
     UI: {
         LineItem: [
             { Value: fileName },
-            { Value: attachmentType },
+            { Value: mediaType },
             { Value: createdAt }
         ]
     }

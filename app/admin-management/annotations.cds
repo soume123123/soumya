@@ -7,7 +7,7 @@ annotate AdminService.Vendors with @(
             { Value: panNumber },
             { Value: email },
             { Value: phone },
-            { Value: status_code },
+            { Value: status },
             { Value: city },
             { Value: state }
         ],
@@ -25,7 +25,7 @@ annotate AdminService.Vendors with @(
                 { Value: panNumber },
                 { Value: email },
                 { Value: phone },
-                { Value: status_code },
+                { Value: status },
                 { Value: city },
                 { Value: state }
             ]
@@ -97,7 +97,7 @@ annotate AdminService.VendorRegistrations with @(
     UI: {
         SelectionFields: [ status ],
         LineItem: [
-            { Value: registrationId },
+            { Value: ID },
             { Value: vendorName },
             { Value: email },
             { Value: status }

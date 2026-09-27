@@ -33,7 +33,7 @@
         {
           "name": "PaymentItemsObjectPage",
           "target": "PaymentItemsObjectPage",
-          "pattern": "PaymentItems({key})"
+          "pattern": "PaymentItems({key}):?query:"
         }
       ],
       "targets": {

@@ -33,7 +33,7 @@
         {
           "name": "VendorQueriesObjectPage",
           "target": "VendorQueriesObjectPage",
-          "pattern": "VendorQueries({key})"
+          "pattern": "VendorQueries({key}):?query:"
         }
       ],
       "targets": {

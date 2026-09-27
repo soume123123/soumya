@@ -2,16 +2,16 @@ using VendorService from '../../srv/vendor-service';
 
 annotate VendorService.PaymentItems with @(
     UI: {
-        SelectionFields: [ paymentStatus_code, division_ID, ageingBucket, dueDate ],
+        SelectionFields: [ paymentStatus, division_ID, ageingBucket, dueDate ],
         LineItem: [
             { Value: sapDocNumber },
-            { Value: documentType_code },
+            { Value: documentType },
             { Value: documentDate },
             { Value: dueDate },
-            { Value: currency_code },
+            { Value: currency },
             { Value: originalAmount },
             { Value: openAmount },
-            { Value: paymentStatus_code },
+            { Value: paymentStatus },
             { Value: paymentRef },
             { Value: ageingBucket },
             { Value: daysOverdue }
@@ -30,13 +30,13 @@ annotate VendorService.PaymentItems with @(
         FieldGroup#PaymentDetails: {
             Data: [
                 { Value: sapDocNumber },
-                { Value: documentType_code },
+                { Value: documentType },
                 { Value: documentDate },
                 { Value: dueDate },
-                { Value: currency_code },
+                { Value: currency },
                 { Value: originalAmount },
                 { Value: openAmount },
-                { Value: paymentStatus_code },
+                { Value: paymentStatus },
                 { Value: paymentRef },
                 { Value: ageingBucket },
                 { Value: daysOverdue },
